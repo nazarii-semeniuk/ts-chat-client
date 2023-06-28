@@ -1,7 +1,7 @@
 <template>
     <div class="input">
-        <input :value="modelValue" :type="type" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)">
-        <label>{{ label }}</label>
+        <input :value="modelValue" :placeholder="placeholder" :type="type" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)">
+        <label v-if="label">{{ label }}</label>
     </div>
 </template>
 
@@ -15,8 +15,10 @@ defineProps({
         default: 'text'
     },
     label: {
-        type: String,
-        required: true
+        type: String
+    },
+    placeholder: {
+        type: String
     },
     modelValue: {
         type: String
