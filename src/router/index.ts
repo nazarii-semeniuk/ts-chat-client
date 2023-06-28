@@ -19,6 +19,11 @@ const router = createRouter({
       component: () => import('../views/MainView.vue'),
       children: [
         {
+          path: '',
+          name: 'Select Chat',
+          component: () => import('../views/SelectChatView.vue')
+        },
+        {
           path: 'chat/:chatId',
           name: 'Chat',
           component: () => import('../views/ChatView.vue')
