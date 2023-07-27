@@ -1,12 +1,12 @@
 <template>
     <div class="register">
-        <AuthForm type="register" />
+        <RegisterForm />
     </div>
 </template>
 
 <script setup lang="ts">
 
-import AuthForm from '@/components/AuthForm.vue';
+import RegisterForm from '@/components/RegisterForm.vue';
 
 </script>
 

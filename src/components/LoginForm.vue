@@ -1,10 +1,9 @@
 <template>
-    <form @submit.prevent="login()" class="auth-form">
-        <h1 class="title">{{ type }}</h1>
+    <form @submit.prevent="submit()" class="auth-form">
+        <h1 class="title">Login</h1>
         <CutsomInput class="input" label="Email" type="email" v-model="loginData.email" />
         <CutsomInput class="input" label="Password" type="password" v-model="loginData.password" />
-        <CutsomInput class="input" v-if="type === 'register'" label="Password Confirmation" type="password" v-model="loginData.passwordConfirmation" />
-        <CustomButton class="button">Login</CustomButton>
+        <CustomButton class="button" @click="">Login</CustomButton>
     </form>
 </template>
 
@@ -13,22 +12,20 @@
 import CutsomInput from '@/ui/CustomInput.vue';
 import CustomButton from '@/ui/CustomButton.vue';
 
+import AuthenticationApi from '@/api/AuthenticationApi';
+import type { UserLoginDTO } from '@/types/User.ts';
+
+const auth = new AuthenticationApi();
+
 import { reactive } from 'vue';
 
-defineProps({
-    type: {
-        type: String,
-        required: true
-    }
-});
-
-const loginData = reactive<{ email: string, password: string, passwordConfirmation?: string }>({
+const loginData = reactive<UserLoginDTO>({
     email: '',
     password: ''
 });
 
-async function login() {
-    console.log(loginData);
+async function submit() {
+    await auth.login(loginData.email, loginData.password);
 }
 
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="input">
-        <input :value="modelValue" :type="type" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)">
+        <input :value="modelValue" :type="type" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" :class="{ 'not-empty' : modelValue.length }">
         <label>{{ label }}</label>
     </div>
 </template>
@@ -19,10 +19,10 @@ defineProps({
         required: true
     },
     modelValue: {
-        type: String
+        type: String,
+        default: ''
     }
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -56,7 +56,8 @@ defineProps({
             border-color: rgba(255, 255, 255, 0.20);
         }
 
-        &:focus {
+        &:focus,
+        &.not-empty {
             border-color: $accent-color;
 
             & + label {
