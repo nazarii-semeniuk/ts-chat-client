@@ -8,6 +8,8 @@ export interface User {
     createdAt: Date;
 }
 
+export type UserDTO = Omit<User, 'password'>;
+
 export type UserLoginDTO = Pick<User, 'email' | 'password'>;
 
 export type UserRegisterDTO = Pick<User, 'email' | 'password' | 'firstName'>;

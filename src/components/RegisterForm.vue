@@ -15,12 +15,16 @@ import CutsomInput from '@/ui/CustomInput.vue';
 import CustomButton from '@/ui/CustomButton.vue';
 
 import AuthenticationApi from '@/api/AuthenticationApi';
-import type { UserRegisterDTO } from '@/types/User.ts';
+import type { UserRegisterDTO, UserDTO } from '@/types/User';
 
 const auth = new AuthenticationApi();
 
 import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
 import { AxiosError } from 'axios';
+
+const router = useRouter();
 
 const loginData = reactive<UserRegisterDTO & { passwordConfirmation: string }>({
     email: '',
@@ -37,7 +41,16 @@ async function submit() {
             return;
         }
 
-        await auth.register(loginData.email, loginData.password, loginData.firstName);
+        const response = await auth.register(loginData.email, loginData.password, loginData.firstName);
+
+        const user: UserDTO = response.data.user;
+
+        const userStore = useUserStore();
+
+        userStore.setUser(user);
+
+        router.push('/');
+
     } catch (err: any) {
         if(err instanceof AxiosError) {
             if(err.response?.data?.message) {
